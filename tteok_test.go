@@ -26,8 +26,8 @@ func Test_process(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	if !strings.Contains(result.Process, "tteok.test.exe") {
-		t.Errorf("Expected log.Process to contain \"tteok.test.exe\". Got %s.", result.Process)
+	if !strings.Contains(result.Process, "tteok.test") {
+		t.Errorf("Expected log.Process to contain \"tteok.test\". Got %s.", result.Process)
 	}
 }
 
