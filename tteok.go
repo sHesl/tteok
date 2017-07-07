@@ -70,22 +70,16 @@ func buildLog(level string, params []interface{}) log {
 }
 
 func (l *log) addCallingLocation() {
-	defer func() {
-		if e := recover(); e != nil {
-			stack := string(debug.Stack())
-			stackSplit := strings.Split(stack, "\n")
+	stack := string(debug.Stack())
+	stackSplit := strings.Split(stack, "\n")
 
-			callingLine := stackSplit[16] // always fixed (FIFO)
-			callingLineSplit := strings.Split(callingLine, "/")
+	callingLine := stackSplit[12] // always fixed (FIFO)
+	callingLineSplit := strings.Split(callingLine, "/")
 
-			callingLocation := callingLineSplit[len(callingLineSplit)-1]
-			callingLocation = strings.Split(callingLocation, " ")[0] // format: "\tfile\path\here\file.go:123 0xfff"
+	callingLocation := callingLineSplit[len(callingLineSplit)-1]
+	callingLocation = strings.Split(callingLocation, " ")[0] // format: "\tfile\path\here\file.go:123 0xfff"
 
-			l.At = callingLocation
-		}
-	}()
-
-	panic(fmt.Errorf(""))
+	l.At = callingLocation
 }
 
 // enrich determines the type of the incoming data and dispatches accordingly
